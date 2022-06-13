@@ -11,7 +11,10 @@
     "@types/node": "^16.11.39",
     "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.5",
+<<<<<<< HEAD
     "axios": "^0.27.2",
+=======
+>>>>>>> 5628eab4fb2060bc1e97457502ed7f2fd77de2bd
     "node-sass": "^7.0.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
