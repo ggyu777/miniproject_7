@@ -1,8 +1,13 @@
 import React from 'react'
+import SearchInput from './SearchInput';
+import NewsContent from './NewsContent';
 
 function Main() {
   return (
-    <div>Main</div>
+    <>
+      <SearchInput />
+      <NewsContent />
+    </>
   )
 }
 
