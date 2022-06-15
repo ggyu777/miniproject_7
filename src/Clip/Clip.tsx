@@ -5,7 +5,9 @@ function Clip() {
 
   const b = useSelector((state:any) => state)
 
-  console.log(b)
+  b.userClipSlice.content.map((el:any)=>{
+    console.log(el)
+  })
   return (
     <div>Clip</div>
   )

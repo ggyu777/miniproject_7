@@ -1,51 +1,59 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { clipNews } from "../reducer/userClipSlice"
+import { clipNews, unclipNews } from "../reducer/userClipSlice"
 
-
+interface newsInfo {
+    id: string,
+    name: string,
+    title: string,
+    date: string,
+    content: string,
+    clip: boolean,
+    url: string
+}
 
 function NewsList(props:any) {
 
-    // console.log(props.newscontent)
-    // console.log(props.newscontent._id)
-
-    let newsInfo = {
+    let newsInfo:newsInfo = {
+        id: props.newscontent._id,
         name: props.newscontent.byline.original,
-        id: "Jason",
         title: props.newscontent.headline.main,
-        date:props.newscontent.pub_date,
-        content:props.newscontent.lead_paragraph,
-        clip:false,
+        date: props.newscontent.pub_date,
+        content: props.newscontent.lead_paragraph,
+        clip: props.clip,
+        url: props.newscontent.web_url
     }
+
     const dispatch = useDispatch();
-    function clipClick(e:any){
-        dispatch(clipNews(newsInfo))
-    }
-
-    const clipCheck = useSelector((state:any) => state)
-
-    console.log(clipCheck)
+    function clipClick(){
+        if(newsInfo.clip === true){
+            dispatch(unclipNews(newsInfo))
+        }
+        else{
+            dispatch(clipNews(newsInfo))
+        }
+    }   
 
     return (
         <>
             <article style={{marginBottom:"40px"}}>
                 <div className='newsTitle'>
                     <h3>
-                        {props.newscontent.headline.main}
+                        {newsInfo.title}
                     </h3>
                 </div>
                 <div className='writeDate'>
-                    {props.newscontent.pub_date}
+                    {newsInfo.date}
                 </div>
                 <div className="newsContents">
-                    {props.newscontent.lead_paragraph}
+                    {newsInfo.content}
                 </div>
                 <button type='button' onClick={clipClick}>
-                    Clip
+                    {newsInfo.clip === true ? "UnClip" : "Clip"}
                 </button>
                 <button type='button'>
-                    <a href={props.newscontent.web_url} target="_blank" rel="noreferrer" >
+                    <a href={newsInfo.url} target="_blank" rel="noreferrer" >
                         See Detail
                     </a>
                 </button>
