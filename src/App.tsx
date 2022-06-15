@@ -7,13 +7,12 @@ import Main from './Main/Main'
 
 function App() {
   return (
-    <>   
+  <>   
     <Routes>
-     <Route path='/' element={<Main/>} />
-     <Route path='/clip' element={<Clip/>} />
-   </Routes>
-   <div>하이</div>
-   </>
+      <Route path='/' element={<Main/>} />
+      <Route path='/clip' element={<Clip/>} />
+    </Routes>
+  </>
 
   );
 }

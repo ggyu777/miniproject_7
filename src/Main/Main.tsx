@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import SearchInput from './SearchInput';
+import NewsContent from './NewsContent';
 
 function Main() {
+  const [inputValue, setInputValue] = useState("");
+
   return (
-    <div>Main</div>
+    <>
+      <SearchInput inputValue={inputValue} setInputValue={setInputValue} />
+      <NewsContent inputValue={inputValue} />
+    </>
   )
 }
 
