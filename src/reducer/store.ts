@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import userClipSlice from "./userClipSlice";
-import { persistReducer } from "redux-persist";
+import { persistReducer,  FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
 
 const persistConfig = {
   key: "root",

@@ -4,18 +4,19 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userClipSlice = createSlice({
   name: "userClip",
   initialState: {
-    content: [{ content: "", id: "", title: "", contents:"", clip: false }],
+    content: [{ id: "", title: "", name:"", date:"", content: "", clip: false, url: "" }],
   },
   reducers: {
-    clipNews: (state:any, action:any):any => {
-      console.log(state);
-      console.log("클립뉴스 함수로 들어왔어요");
-      console.log(action.payload);
+    clipNews: (state, action): any => {
       state.content.push({ ...action.payload, clip: true });
     },
-    unclipNews: (state:any, action:any):any => {
-      console.log(action.payload);
-      return { ...action.payload, clip: false };
+    unclipNews: (state, action): any => {
+
+      return {
+        content: state.content.filter(
+          (content) => content.id !== action.payload.id
+        ),
+      };
     },
   },
 });
