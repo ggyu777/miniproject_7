@@ -12,8 +12,8 @@ function NewsContent(props:any) {
     const [isLoading, setIsLoading] = useState(false)
     const concatArr:any = []
     const  FetchFunc = () => {
+      
         if(more === false){
-            
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
@@ -47,7 +47,7 @@ function NewsContent(props:any) {
     } 
     const  scrollHandle = () => {
         if(isLoading === false){
-            if(Math.floor(html.clientHeight + html.scrollTop) === html.scrollHeight){
+            if(Math.round(html.clientHeight + html.scrollTop) === html.scrollHeight){
                 setMore(true)
                 setPage((prev)=>prev+1);
             }
@@ -55,24 +55,27 @@ function NewsContent(props:any) {
     }
 
     useEffect(()=>{
+        if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
             setPage(0)
             setMore(true)
             FetchFunc();
         }
+    }
         window.addEventListener('scroll',scrollHandle)
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
-
+    
     },[props.inputValue])
     
     useEffect(() => {
+        if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
             setMore(false)
             FetchFunc();
         }
-
+        }
         window.addEventListener('scroll',scrollHandle)
         
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
