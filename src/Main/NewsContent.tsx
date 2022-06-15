@@ -56,7 +56,7 @@ function NewsContent(props:any) {
             }
         }
     }
-    
+
     useEffect(()=>{
         if(isLoading === false){
             setIsLoading(true)
@@ -88,7 +88,6 @@ function NewsContent(props:any) {
         clipList.push(clip_list.id);
     });
 
-    
     return (
         <>
             {fetchNewsList.map((nl:any, index:number) => {

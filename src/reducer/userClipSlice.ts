@@ -1,6 +1,4 @@
-import { persistReducer } from "redux-persist";
-import { createSlice, current } from "@reduxjs/toolkit";
-import { act } from "react-dom/test-utils";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const userClipSlice = createSlice({
   name: "userClip",

@@ -14,7 +14,6 @@ interface newsInfo {
 }
 
 function NewsList(props:any) {
-
     let newsInfo:newsInfo = {
         id: props.newscontent._id,
         name: props.newscontent.byline.original,
