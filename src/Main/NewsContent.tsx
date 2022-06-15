@@ -49,10 +49,7 @@ function NewsContent(props:any) {
         if(isLoading === false){
             if(Math.floor(html.clientHeight + html.scrollTop) === html.scrollHeight){
                 setMore(true)
-                setTimeout(()=>{
-                    setPage((prev)=>prev+1);
-                    
-                },1500)
+                setPage((prev)=>prev+1);
             }
         }
     }
