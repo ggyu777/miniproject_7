@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes,Route } from 'react-router-dom';
+import { Routes,Route,Navigate } from 'react-router-dom';
 import Clip from './Clip/Clip';
 import Main from './Main/Main'
 import ErrorPage from './Navi/ErrorPage'
@@ -16,7 +16,7 @@ function App() {
     <Routes>
      <Route path='/' element={<Main/>} />
      <Route path='/clip' element={<Clip/>} />
-     <Route path='*' element={<ErrorPage/>} />
+     <Route path='*' element={ <Navigate to="/" /> } />
    </Routes>
    </>
 

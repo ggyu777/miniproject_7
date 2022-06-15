@@ -8,8 +8,8 @@ function Main() {
 
   return (
     <>
+      <button className='clipLink' onClick={()=>{navigate('/clip')}} >클립목록</button><br/>
       <SearchInput />
-      <button className='clipLink' onClick={()=>{navigate('/clip')}} >클립목록</button>
       <NewsContent />
     </>
   )
