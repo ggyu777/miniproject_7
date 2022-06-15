@@ -5,110 +5,97 @@ import { useSelector } from 'react-redux';
 
 const html:any = document.querySelector("html");
 
-let viewPage = 0;
-
-// const observer = new IntersectionObserver(ent => {
-//     ent.forEach(entry => {
-//         if(entry.intersectionRatio > 0){
-//             entry.target.classList.add("tada")
-//             // const a = moreFetch()
-//             console.log("hi")
-//         }
-//         else{
-//             entry.target.classList.remove("tada")
-//             console.log("hi2")
-//         }
-//     })
-// });
-
-// const boxElList = document.querySelectorAll("article");
-// boxElList.forEach((el)=>{
-//     observer.observe(el)
-// })
-
-// let option = {
-//     root: document.querySelector("html"),
-//     rootMargin: '100px',
-//     threshold: 1.0
-// }
-// let observer = new IntersectionObserver(()=>{
-
-// },option)
-
-
-
 function NewsContent(props:any) {
     const [fetchNewsList, setFetchNewsList] = useState([]);
+    const [more, setMore] = useState(false)
+    const [page, setPage] = useState(0);
+    const [isLoading, setIsLoading] = useState(false)
     const concatArr:any = []
-
-    const moreFetch = async () => {
-        viewPage += 1;
-
-        await axios
-        .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=${viewPage}&q=${props.inputValue}&sort=newest`)
-        .then((res)=>{
-            console.log("1")
-            console.log(fetchNewsList)
-            setFetchNewsList(fetchNewsList.concat(res.data.response.docs))
+    const  FetchFunc = () => {
+        if(more === false){
             
-        })
-        .then(()=>{
-            console.log("2")
-            console.log(fetchNewsList)
-        })
-        .catch((err)=>{
-            console.log(err)
-        })
-    }
-
-    const FetchFunc = () => {
-        viewPage = 0;
-        axios
-            // &q= keyword
-            .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=${viewPage}&q=${props.inputValue}&sort=newest`)
-            .then((res)=>{
-                setFetchNewsList(concatArr.concat(res.data.response.docs))
-            })
-            .catch((err)=>{
-                console.log(err)
-            });
+            axios
+                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
+                .then((res)=>{
+                    setFetchNewsList(concatArr.concat(res.data.response.docs))
+                })
+                .then(()=>{
+                    setIsLoading(false)
+                    setMore(state => !state)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                });
+            
+        }
+        else{
+            axios
+                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=${page}&q=${props.inputValue}&sort=newest`)
+                .then((res)=>{
+                    setFetchNewsList(fetchNewsList.concat(res.data.response.docs))
+                })
+                .then(()=>{
+                    setIsLoading(false)
+                    // setMore(false)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+                
+        }
+        
     } 
+    const  scrollHandle = () => {
+        if(isLoading === false){
+            if(Math.floor(html.clientHeight + html.scrollTop) === html.scrollHeight){
+                setMore(true)
+                setTimeout(()=>{
+                    setPage((prev)=>prev+1);
+                    
+                },1500)
+            }
+        }
+    }
     
     useEffect(()=>{
-            FetchFunc()
+        if(isLoading === false){
+            setIsLoading(true)
+            setPage(0)
+            setMore(true)
+            FetchFunc();
+        }
+        window.addEventListener('scroll',scrollHandle)
+        return ()=>{window.removeEventListener('scroll',scrollHandle)}
 
-            const scrollHandle = () => {
-                if(Math.floor(html.clientHeight + html.scrollTop) === html.scrollHeight){
+    },[props.inputValue])
+    
+    useEffect(() => {
+        if(isLoading === false){
+            setIsLoading(true)
+            setMore(false)
+            FetchFunc();
+        }
 
-                    // 1번 Case
-                    moreFetch();
-
-                    // 2번 Case
-                    let btn:any = document.querySelector(".moreView");
-                    btn.click(); // onClick = { moreFetch }
-                }
-            }
-            window.addEventListener('scroll',scrollHandle)
-            
-            return window.removeEventListener('scroll',scrollHandle)
-    },[])
+        window.addEventListener('scroll',scrollHandle)
+        
+        return ()=>{window.removeEventListener('scroll',scrollHandle)}
+    }, [page])
 
     const clipCheck = useSelector((state:any) => state)
     const clipList:string[] = [];
+
     clipCheck.userClipSlice.content.map((clip_list:any):void => {
         clipList.push(clip_list.id);
     });
-    
 
+    
     return (
         <>
-            <button className="moreView" type="button" onClick={moreFetch}>Button</button>
-            {Object.values(fetchNewsList).map((nl:any, index:number) => {
+            {fetchNewsList.map((nl:any, index:number) => {
                 let storeClipCheck = false;
                 if(clipList.includes(nl._id)){
                     storeClipCheck = true;
                 }
-
                 return(
                     <NewsList newscontent={nl} clip={storeClipCheck} key={index}/>
                 )

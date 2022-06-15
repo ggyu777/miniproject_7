@@ -20,7 +20,6 @@ export default function SearchInput(props:any) {
 
                 localStorage.setItem('keyword', a.toString());
 
-                console.log(a)
 
                 // if(a.length > 5){
                 //     const b = 
