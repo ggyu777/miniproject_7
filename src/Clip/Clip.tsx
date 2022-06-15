@@ -6,6 +6,10 @@ function Clip() {
 
   const b = useSelector((state:any) => state)
 
+  b.userClipSlice.content.map((el:any)=>{
+    console.log(el)
+  })
+
   const navigate = useNavigate();
 
   console.log(b)
