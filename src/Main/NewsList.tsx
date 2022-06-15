@@ -62,4 +62,5 @@ function NewsList(props:any) {
 }
 
 
+
 export default NewsList

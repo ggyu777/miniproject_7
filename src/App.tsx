@@ -9,13 +9,13 @@ import { useSelector } from 'react-redux';
 
 function App() {
   return (
-    <>   
 
+    <>   
     <Routes>
      <Route path='/' element={<Main/>} />
      <Route path='/clip' element={<Clip/>} />
      <Route path='*' element={ <Navigate to="/" /> } />
-   </Routes>
+    </Routes>
    </>
 
   );

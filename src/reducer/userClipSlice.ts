@@ -1,3 +1,4 @@
+import { persistReducer } from "redux-persist";
 import { createSlice } from "@reduxjs/toolkit";
 
 export const userClipSlice = createSlice({
