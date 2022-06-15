@@ -1,20 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React from 'react';
 import {useNavigate} from 'react-router-dom';
 
-function Clip() {
-
-  const b = useSelector((state:any) => state)
-
+function ErrorPage() {
   const navigate = useNavigate();
-
-  console.log(b)
   return (
     <>
+      <div>존재하지 않는 페이지 입니다</div>
       <button className='mainLink' onClick={()=>{navigate('/')}} >메인으로</button>
-      <div>Clip</div>
     </>
   )
 }
 
-export default Clip
+export default ErrorPage
