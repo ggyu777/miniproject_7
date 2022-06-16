@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function SearchInput(props:any) {
   const [timer, setTimer] = useState(0);
@@ -27,6 +26,20 @@ export default function SearchInput(props:any) {
     }
   }
 
+  // 검색어 삭제 처리
+  const handleKeywordDelete = (idx:number) => {
+    output.splice(output.length-idx-1, 1);
+    localStorage.setItem("Keywords", JSON.stringify([...output]));
+    setFlag(!flag);
+    if(!output.length) { // 최근검색어 모두 삭제 시 스토리지에 빈 배열이 남아있어서 아예 삭제 처리
+      localStorage.removeItem("Keywords");
+    }
+  }
+
+  const handleBlurClear = (e:any) => {
+    e.preventDefault();
+  }
+
   // 0.5초 후 검색 처리
   const handleInputChange = (e:any) => {
     if (timer) {  //0.5초 미만으로 입력이 주어질 경우 해당 timer를 clear
@@ -37,18 +50,6 @@ export default function SearchInput(props:any) {
       handleLocalStorage(e);
     }, 500); //입력 후 0.5초 이상 지나면 e.target.value를 담는 함수 실행
     setTimer(newTimer);
-  }
-
-  // 검색어 삭제 처리
-  const handleKeywordDelete = (idx:number) => {
-    output.splice(output.length-idx-1, 1);
-    localStorage.setItem("Keywords", JSON.stringify([...output]));
-    setFlag(!flag);
-  }
-  
-
-  const handleBlurClear = (e:any) => {
-    e.preventDefault();
   }
 
   return (
