@@ -47,7 +47,7 @@ function NewsContent(props:any) {
     } 
     const  scrollHandle = () => {
         if(isLoading === false){
-            if(Math.floor(html.clientHeight + html.scrollTop) === html.scrollHeight){
+            if(Math.round(html.clientHeight + html.scrollTop) === html.scrollHeight){
                 setMore(true)
                 setPage((prev)=>prev+1);
             }
