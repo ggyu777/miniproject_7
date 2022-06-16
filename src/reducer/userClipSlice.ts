@@ -1,4 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import { createSlice, current } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 export const userClipSlice = createSlice({
   name: "userClip",
@@ -8,14 +10,16 @@ export const userClipSlice = createSlice({
   reducers: {
     clipNews: (state, action): any => {
       state.content.push({ ...action.payload, clip: true });
+      const contentfilter = state.content.filter((char,idx,arr)=>{
+        return arr.findIndex((item)=>item.id === char.id)===idx
+      })
+      state.content=contentfilter
     },
-    unclipNews: (state, action): any => {
 
-      return {
-        content: state.content.filter(
-          (content) => content.id !== action.payload.id
-        ),
-      };
+  // });
+    unclipNews: (state, action): any|undefined => {
+      let findeNewsNum = state.content.findIndex((a)=>{return (a.id == action.payload ? a : null)})
+      state.content.splice(findeNewsNum,1)
     },
   },
 });

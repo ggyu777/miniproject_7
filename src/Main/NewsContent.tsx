@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import NewsList from './NewsList';
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+
 
 const html:any = document.querySelector("html");
 
@@ -13,7 +14,6 @@ function NewsContent(props:any) {
     const concatArr:any = []
     const  FetchFunc = () => {
         if(more === false){
-            
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
@@ -55,24 +55,27 @@ function NewsContent(props:any) {
     }
 
     useEffect(()=>{
+        if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
             setPage(0)
             setMore(true)
             FetchFunc();
         }
+    }
         window.addEventListener('scroll',scrollHandle)
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
-
+    
     },[props.inputValue])
     
     useEffect(() => {
+        if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
             setMore(false)
             FetchFunc();
         }
-
+        }
         window.addEventListener('scroll',scrollHandle)
         
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
