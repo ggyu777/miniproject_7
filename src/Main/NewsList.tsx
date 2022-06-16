@@ -1,6 +1,4 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clipNews, unclipNews } from "../reducer/userClipSlice"
 
 interface newsInfo {
@@ -15,6 +13,7 @@ interface newsInfo {
 
 function NewsList(props:any) {
 
+    // props를 가져와서 info로 관리
     let newsInfo:newsInfo = {
         id: props.newscontent._id,
         name: props.newscontent.byline.original,
@@ -28,9 +27,11 @@ function NewsList(props:any) {
     const dispatch = useDispatch();
     function clipClick(){
         if(newsInfo.clip === true){
+            // unClip Function
             dispatch(unclipNews(newsInfo))
         }
         else{
+            // clip Function
             dispatch(clipNews(newsInfo))
         }
     }   
