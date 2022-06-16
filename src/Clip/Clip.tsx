@@ -8,11 +8,12 @@ function Clip() {
   
   const navigate = useNavigate();
 
-  const clippedNews = useSelector((state:any) => state.userClipSlice.content)
+  const clippedNews = useSelector((state:any) => state.userClipSlice.content) // 클립된 뉴스 불러오기
 
   return (
     <>
       <button className='mainLink' onClick={()=>{navigate('/')}} >메인으로</button>
+      {/* 클립 뉴스 맵핑해서 보여주기 */}
         {clippedNews.map((i:any,key:any)=>{
                 if(key>0){
             return(
@@ -28,6 +29,7 @@ function Clip() {
               <div className="newsContents">
                   {i.content}
               </div>
+              {/* 클립이 false일 때 clip으로 보여지고, true이면 unclip으로 보여주기 */}
               {
               i.clip==false
               ? <button type='button' onClick={()=>{dispatch(unclipNews(i.id))}}>Clip</button> 

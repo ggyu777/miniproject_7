@@ -26,7 +26,7 @@ function NewsContent(props:any) {
                 .catch((err)=>{
                     console.log(err)
                 });
-            
+
         }
         else{
             axios
@@ -44,7 +44,7 @@ function NewsContent(props:any) {
                 
         }
         
-    } 
+    }
     const  scrollHandle = () => {
         if(isLoading === false){
             if(Math.round(html.clientHeight + html.scrollTop) === html.scrollHeight){
