@@ -16,7 +16,7 @@ function Clip() {
   return (
     <>
       <button className='mainLink' onClick={()=>{navigate('/')}} >메인으로</button>
-        clippedNews.map((i:any,key:any)=>{
+        {/* clippedNews.map((i:any,key:any)=>{
                 if(key>0){
             return(
               <article style={{marginBottom:"40px"}}>
@@ -44,11 +44,11 @@ function Clip() {
             </article>
             )
            }
-          }
+          } */}
+          
      </>
     )
+        }
 
 
-
-export default Clip
-
+export default Clip;

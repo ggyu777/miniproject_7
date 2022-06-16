@@ -70,10 +70,10 @@ function NewsList(props:any) {
                     {newsInfo.content}
                 </div>
               
-<!--                 {
+{/*                  {
                 newsInfo.clip == false ? <button type='button' onClick={clipClickButton}>Clip</button> : <button type='button' onClick={unclipClickButton}>Unclip</button>
                 } 
--->
+ */}
                 <button type='button' onClick={clipClick}>
                     {newsInfo.clip === true ? "UnClip" : "Clip"}
                 </button>
