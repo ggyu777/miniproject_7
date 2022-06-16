@@ -5,7 +5,6 @@ import { act } from "react-dom/test-utils";
 export const userClipSlice = createSlice({
   name: "userClip",
   initialState: {
-//     content: [{ id: null, title: null, name:null, date:null, content: null, clip: false, url: null }],
     content: [{ id: "", title: "", name:"", date:"", content: "", clip: false, url: "" }],
   },
   reducers: {

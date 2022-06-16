@@ -4,19 +4,16 @@ import { clipNews, unclipNews } from "../reducer/userClipSlice"
 import {useNavigate} from 'react-router-dom';
 
 function Clip() {
-  // let content:any = useSelector((state:any)=>{state.content})
   let dispatch = useDispatch()
   
   const navigate = useNavigate();
 
   const clippedNews = useSelector((state:any) => state.userClipSlice.content)
 
-  console.log(clippedNews)
-  
   return (
     <>
       <button className='mainLink' onClick={()=>{navigate('/')}} >메인으로</button>
-        {/* clippedNews.map((i:any,key:any)=>{
+        {clippedNews.map((i:any,key:any)=>{
                 if(key>0){
             return(
               <article style={{marginBottom:"40px"}}>
@@ -44,7 +41,9 @@ function Clip() {
             </article>
             )
            }
-          } */}
+          }
+        )
+}
           
      </>
     )
