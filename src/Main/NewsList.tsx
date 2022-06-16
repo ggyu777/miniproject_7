@@ -14,6 +14,27 @@ interface newsInfo {
 }
 
 function NewsList(props:any) {
+
+//     let newsInfo = {
+//         id: props.id,
+//         name: props.newscontent.byline.original,
+//         title: props.newscontent.headline.main,
+//         date:props.newscontent.pub_date,
+//         content:props.newscontent.lead_paragraph,
+//         newsurl:props.newscontent.web_url,
+//         clip:props.bool,
+//     }
+
+//     const dispatch = useDispatch();
+
+//     function clipClickButton(e:any){
+//         dispatch(clipNews(newsInfo))
+//     }
+
+//     function unclipClickButton(){
+//         dispatch(unclipNews(newsInfo))
+//     }
+
     let newsInfo:newsInfo = {
         id: props.newscontent._id,
         name: props.newscontent.byline.original,
@@ -48,6 +69,11 @@ function NewsList(props:any) {
                 <div className="newsContents">
                     {newsInfo.content}
                 </div>
+              
+<!--                 {
+                newsInfo.clip == false ? <button type='button' onClick={clipClickButton}>Clip</button> : <button type='button' onClick={unclipClickButton}>Unclip</button>
+                } 
+-->
                 <button type='button' onClick={clipClick}>
                     {newsInfo.clip === true ? "UnClip" : "Clip"}
                 </button>
@@ -59,6 +85,7 @@ function NewsList(props:any) {
             </article>
         </>
     )
+    
 }
 
 

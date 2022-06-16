@@ -6,10 +6,8 @@ import Main from './Main/Main'
 import ErrorPage from './Navi/ErrorPage'
 import { useSelector } from 'react-redux';
 
-
 function App() {
   return (
-
     <>   
     <Routes>
      <Route path='/' element={<Main/>} />
