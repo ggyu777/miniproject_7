@@ -7,15 +7,13 @@ export const userClipSlice = createSlice({
   initialState: {
     content: [{ id: "", title: "", name:"", date:"", content: "", clip: false, url: "" }],
   },
+  // 클립뉴스 리듀서 : 클립된 컨텐트 state에 넣어주기
   reducers: {
     clipNews: (state, action): any => {
       state.content.push({ ...action.payload, clip: true });
-      const contentfilter = state.content.filter((char,idx,arr)=>{
-        return arr.findIndex((item)=>item.id === char.id)===idx
-      })
-      state.content=contentfilter
     },
 
+    // 언클립뉴스 리듀서: 클릭된 뉴스 없애주기
   // });
     unclipNews: (state, action): any|undefined => {
       let findeNewsNum = state.content.findIndex((a)=>{return (a.id == action.payload ? a : null)})

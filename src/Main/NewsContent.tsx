@@ -30,7 +30,7 @@ function NewsContent(props:any) {
                 .catch((err)=>{
                     console.log(err)
                 });
-            
+
         }
         else{
             // infinite scroll Fetch API
