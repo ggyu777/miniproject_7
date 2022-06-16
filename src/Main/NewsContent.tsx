@@ -12,7 +12,6 @@ function NewsContent(props:any) {
     const [isLoading, setIsLoading] = useState(false)
     const concatArr:any = []
     const  FetchFunc = () => {
-      
         if(more === false){
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
