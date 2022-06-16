@@ -1,31 +1,32 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { clipNews } from "../reducer/userClipSlice"
+import { clipNews,unclipNews } from "../reducer/userClipSlice"
 
 
 
 function NewsList(props:any) {
 
-    // console.log(props.newscontent)
-    // console.log(props.newscontent._id)
-
     let newsInfo = {
+        id: props.id,
         name: props.newscontent.byline.original,
-        id: "Jason",
         title: props.newscontent.headline.main,
         date:props.newscontent.pub_date,
         content:props.newscontent.lead_paragraph,
-        clip:false,
+        newsurl:props.newscontent.web_url,
+        clip:props.bool,
     }
+
     const dispatch = useDispatch();
-    function clipClick(e:any){
+
+    function clipClickButton(e:any){
         dispatch(clipNews(newsInfo))
     }
 
-    const clipCheck = useSelector((state:any) => state)
+    function unclipClickButton(){
+        dispatch(unclipNews(newsInfo))
+    }
 
-    console.log(clipCheck)
 
     return (
         <>
@@ -41,9 +42,9 @@ function NewsList(props:any) {
                 <div className="newsContents">
                     {props.newscontent.lead_paragraph}
                 </div>
-                <button type='button' onClick={clipClick}>
-                    Clip
-                </button>
+                {
+                newsInfo.clip == false ? <button type='button' onClick={clipClickButton}>Clip</button> : <button type='button' onClick={unclipClickButton}>Unclip</button>
+                }
                 <button type='button'>
                     <a href={props.newscontent.web_url} target="_blank" rel="noreferrer" >
                         See Detail
@@ -52,6 +53,7 @@ function NewsList(props:any) {
             </article>
         </>
     )
+    
 }
 
 

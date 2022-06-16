@@ -6,9 +6,9 @@ import Main from './Main/Main'
 import { useSelector } from 'react-redux';
 
 function App() {
-  const b = useSelector((state:any) => state.list);
+  // const b = useSelector((state:any) => state.list);
 
-  console.log(b)
+  // console.log(b)
   return (
     <>   
     <Routes>
