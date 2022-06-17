@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
-export default function SearchInput(props:any) {
+interface ISearchProps {
+  inputValue: string,
+  setInputValue: React.Dispatch<React.SetStateAction<string>>
+}
+
+export default function SearchInput(props:ISearchProps) {
   const [timer, setTimer] = useState(0);
   const [focus, setFocus] = useState(false);
   const [flag, setFlag] = useState(false);
   let output:string[] = JSON.parse(localStorage.getItem("Keywords") || "[]"); // 저장된 검색어 가져옴
 
-  // 로컬 스토리지 저장 처리
-  const handleLocalStorage  = (e:any) => {
+  // 로컬 스토리지에 검색어 저장 처리
+  const handleLocalStorage  = (e:React.ChangeEvent<HTMLInputElement>) => {
     let Keywords:{ id: number, content: string } = 
     { 
       id: Date.now(),
@@ -36,22 +41,22 @@ export default function SearchInput(props:any) {
     }
   }
 
-  const handleBlurClear = (e:any) => {
+  const handleBlurClear = (e:React.MouseEvent) => {
     e.preventDefault();
   }
 
   // 0.5초 후 검색 처리
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     if (timer) {  //0.5초 미만으로 입력이 주어질 경우 해당 timer를 clear
       clearTimeout(timer);
     }
-    const newTimer:any = setTimeout(() => {
+    let newTimer: ReturnType<typeof setTimeout> = setTimeout(() => {
       props.setInputValue(e.target.value);
       handleLocalStorage(e);
     }, 500); //입력 후 0.5초 이상 지나면 e.target.value를 담는 함수 실행
-    setTimer(newTimer);
+    setTimer(+newTimer);
   }
-
+  
   return (
     <div>
       <input
