@@ -2,17 +2,23 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import NewsList from './NewsList';
 import { useSelector } from "react-redux";
+import { InewsSearch, newsInfo } from "../Types/userInterface";
+import { RootState } from "../"
 
 // 현재 Page DOM 접근 ( ScrollTop ScrollClient ScrollHeight 접근용)
-const html:any = document.querySelector("html");
+const html:HTMLHtmlElement = document.querySelector("html")!;
+
+interface InputValue {
+    inputValue: string
+}
 
 // Fetch API로 배열 생성 후 map
-function NewsContent(props:any) {
-    const [fetchNewsList, setFetchNewsList] = useState([]);
+function NewsContent(props:InputValue) {
+    const [fetchNewsList, setFetchNewsList] = useState<InewsSearch[]>([]);
     const [more, setMore] = useState(false)
     const [page, setPage] = useState(0);
     const [isLoading, setIsLoading] = useState(false)
-    const concatArr:any = []
+    const concatArr:InewsSearch[]= []
 
     // Axios Fetch Function
     const  FetchFunc = () => {
@@ -92,18 +98,18 @@ function NewsContent(props:any) {
     }, [page])
 
     // Store 전역 상태 관리에서 Clip한 List 호출
-    const clipCheck = useSelector((state:any) => state)
+    const clipCheck = useSelector((state:RootState) => state)
     const clipList:string[] = [];
 
     // 호출한 배열을 map 하여 id값만 빈 배열에 병합
-    clipCheck.userClipSlice.content.map((clip_list:any):void => {
+    clipCheck.userClipSlice.content.map((clip_list:newsInfo):void => {
         clipList.push(clip_list.id);
     });
 
     
     return (
         <>
-            {fetchNewsList.map((nl:any, index:number) => {
+            {fetchNewsList.map((nl:InewsSearch, index:number) => {
                 // Clip 여부 확인
                 // Fetch된 내용들을 map으로 검사하여 만약 해당 기사의 id가 Store에서 관리하는 id에 포함되어있는지 비교
                 let storeClipCheck = false;

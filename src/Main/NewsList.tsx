@@ -1,17 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { clipNews, unclipNews } from "../reducer/userClipSlice"
+import { InewsSearch, newsInfo } from "../Types/userInterface"
 
-interface newsInfo {
-    id: string,
-    name: string,
-    title: string,
-    date: string,
-    content: string,
-    clip: boolean,
-    url: string
+interface Iprops {
+    clip: boolean;
+    newscontent: InewsSearch;
 }
 
-function NewsList(props:any) {
+function NewsList(props:Iprops) {
 
     // props를 가져와서 info로 관리
     let newsInfo:newsInfo = {
@@ -19,7 +15,7 @@ function NewsList(props:any) {
         name: props.newscontent.byline.original,
         title: props.newscontent.headline.main,
         date: props.newscontent.pub_date,
-        content: props.newscontent.lead_paragraph,
+        content: props.newscontent.lead_paragraphm,
         clip: props.clip,
         url: props.newscontent.web_url
     }
