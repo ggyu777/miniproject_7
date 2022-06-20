@@ -33,6 +33,14 @@ function NewsContent(props:InputValue) {
                     setIsLoading(false)
                     setMore(state => !state)
                 })
+                .then(()=>{
+                    if(html.clientHeight === html.scrollHeight){
+                        if(isLoading === false){
+                            setMore(true)
+                            setPage((prev)=>prev+1);
+                        }
+                    }
+                })
                 .catch((err)=>{
                     console.log(err)
                 });
@@ -74,7 +82,7 @@ function NewsContent(props:InputValue) {
         if(isLoading === false){
             setIsLoading(true)
             setPage(0)
-            setMore(true)
+            setMore(false)
             FetchFunc();
         }
     }
@@ -88,7 +96,7 @@ function NewsContent(props:InputValue) {
         if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
-            setMore(false)
+            setMore(true)
             FetchFunc();
         }
         }
