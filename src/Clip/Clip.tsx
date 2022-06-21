@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clipNews, unclipNews } from "../reducer/userClipSlice"
 import {useNavigate} from 'react-router-dom';
+import { InewsSearch, newsInfo} from "../Types/userInterface"
+import { RootState } from "../"
 
 function Clip() {
   let dispatch = useDispatch()
   
   const navigate = useNavigate();
 
-  const clippedNews = useSelector((state:any) => state.userClipSlice.content) // 클립된 뉴스 불러오기
+  const clippedNews = useSelector((state:RootState) => state.userClipSlice.content) // 클립된 뉴스 불러오기
 
   return (
     <>
       <button className='mainLink' onClick={()=>{navigate('/')}} >메인으로</button>
       {/* 클립 뉴스 맵핑해서 보여주기 */}
-        {clippedNews.map((i:any,key:any)=>{
-                if(key>0){
+        {clippedNews.map((i:newsInfo,key:number)=>{
+          if(key>0){
             return(
               <article style={{marginBottom:"40px"}}>
               <div className='newsTitle'>
@@ -36,7 +38,7 @@ function Clip() {
               : <button type='button' onClick={()=>{dispatch(unclipNews(i.id))}}>Unclip</button>
               }
               <button type='button'>
-                  <a href={i.newsurl} target="_blank" rel="noreferrer" >
+                  <a href={i.url} target="_blank" rel="noreferrer" >
                       See Detail
                   </a>
               </button>
