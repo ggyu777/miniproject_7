@@ -34,12 +34,15 @@ function NewsContent(props:InputValue) {
                     setMore(state => !state)
                 })
                 .then(()=>{
-                    if(html.clientHeight === html.scrollHeight){
-                        if(isLoading === false){
-                            setMore(true)
-                            setPage((prev)=>prev+1);
+
+                    setTimeout(()=>{
+                        if(html.clientHeight === html.scrollHeight){
+                            if(isLoading === false){
+                                setMore(true)
+                                setPage((prev)=>prev+1);
+                            }
                         }
-                    }
+                    },1000)
                 })
                 .catch((err)=>{
                     console.log(err)
