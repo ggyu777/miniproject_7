@@ -12,34 +12,34 @@
 2022.06.13 ~ 2022.06.21
 
 ## 🤝 커밋 관습
-🪳 bug
+🪳 bug : 
 버그가 있어서 작동이 안돼요 ㅠㅠ
  
-🧱 component
+🧱 component : 
 컴포넌트 단위의 작업을 진행해요!
  
-⚙️ conf
+⚙️ conf : 
 환경 설정을 진행해요!
  
-📋 documentation
+📋 documentation : 
 문서 작업을 진행해요!
  
-🌠 feature
+🌠 feature : 
 새로운 기능을 만들어요!
  
-🛠 fix
+🛠 fix : 
 에러 혹은 버그를 고쳐요!
  
-✈️ migration
+✈️ migration : 
 마이그레이션을 작업을 진행해요!
  
-♻️ refactor
+♻️ refactor : 
 리팩토링을 진행해요!
  
-✍🏻 rename
+✍🏻 rename : 
 이름을 변경했어요!
  
-🎨 style
+🎨 style : 
 UI를 수정해요! (css작업)
 
 ## 🤼‍♀️ 팀 구성
