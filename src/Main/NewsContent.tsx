@@ -23,7 +23,7 @@ function NewsContent(props:InputValue) {
     // Axios Fetch Function
     const  FetchFunc = () => {
         // 새로 값을 입력할 때
-        if(more === false){
+        if(more === false || Math.round(html.clientHeight + html.scrollTop) !== html.scrollHeight){
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
@@ -34,15 +34,14 @@ function NewsContent(props:InputValue) {
                     setMore(state => !state)
                 })
                 .then(()=>{
-
-                    setTimeout(()=>{
-                        if(html.clientHeight === html.scrollHeight){
+                    if(html.clientHeight === html.scrollHeight){
+                        setTimeout(()=>{
                             if(isLoading === false){
                                 setMore(true)
                                 setPage((prev)=>prev+1);
                             }
-                        }
-                    },1000)
+                        },1000)
+                    }
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -72,6 +71,7 @@ function NewsContent(props:InputValue) {
         if(isLoading === false){
             // 현재 화면의 스크롤 남은 여백과 스크롤 위치를 더한 값이 전체 스크롤 길이와 동일하다면 실행
             // 즉 스크롤이 화면 끝에 도착하였을 때
+            
             if(Math.round(html.clientHeight + html.scrollTop) === html.scrollHeight){
                 setMore(true)
                 setPage((prev)=>prev+1);
@@ -81,30 +81,28 @@ function NewsContent(props:InputValue) {
 
     // Input Value Change 시 Fetch 함수 호출
     useEffect(()=>{
+        setMore(false)
         if(props.inputValue){
-        if(isLoading === false){
-            setIsLoading(true)
-            setPage(0)
-            setMore(false)
-            FetchFunc();
+            if(isLoading === false){
+                setIsLoading(true)
+                setPage(0)
+                FetchFunc();
+            }
         }
-    }
         window.addEventListener('scroll',scrollHandle)
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
-    
     },[props.inputValue])
     
     // Inifinite Scroll 시 Fetch 함수 호출
     useEffect(() => {
+        setMore(true)
         if(props.inputValue){
         if(isLoading === false){
             setIsLoading(true)
-            setMore(true)
             FetchFunc();
         }
         }
         window.addEventListener('scroll',scrollHandle)
-        
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
     }, [page])
 
