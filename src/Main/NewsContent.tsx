@@ -7,6 +7,7 @@ import { RootState } from "../"
 
 // 현재 Page DOM 접근 ( ScrollTop ScrollClient ScrollHeight 접근용)
 const html:HTMLHtmlElement = document.querySelector("html")!;
+const api_key = process.env.REACT_APP_API_KEY;
 
 interface InputValue {
     inputValue: string
@@ -25,7 +26,7 @@ function NewsContent(props:InputValue) {
         // 새로 값을 입력할 때
         if(more === false){
             axios
-                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
+                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${api_key}&page=0&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
                     setFetchNewsList(concatArr.concat(res.data.response.docs))
                 })
@@ -52,7 +53,7 @@ function NewsContent(props:InputValue) {
         else{
             // infinite scroll Fetch API
             axios
-                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=${page}&q=${props.inputValue}&sort=newest`)
+                .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${api_key}&page=${page}&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
                     setFetchNewsList(fetchNewsList.concat(res.data.response.docs))
                 })
