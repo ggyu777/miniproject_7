@@ -23,7 +23,8 @@ function NewsContent(props:InputValue) {
     // Axios Fetch Function
     const  FetchFunc = () => {
         // 새로 값을 입력할 때
-        if(more === false || Math.round(html.clientHeight + html.scrollTop) !== html.scrollHeight){
+        if(more === false){
+            console.log("first")
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=0&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
@@ -34,14 +35,15 @@ function NewsContent(props:InputValue) {
                     setMore(state => !state)
                 })
                 .then(()=>{
-                    if(html.clientHeight === html.scrollHeight){
+                        setMore(false)
                         setTimeout(()=>{
+                            if(html.clientHeight === html.scrollHeight){
                             if(isLoading === false){
                                 setMore(true)
                                 setPage((prev)=>prev+1);
                             }
-                        },1000)
-                    }
+                        }
+                        },500)
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -50,6 +52,7 @@ function NewsContent(props:InputValue) {
         }
         else{
             // infinite scroll Fetch API
+            console.log("over")
             axios
                 .get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=EWwGLC2MiDPOYJ3pitIA23xZgYuFRtI0&page=${page}&q=${props.inputValue}&sort=newest`)
                 .then((res)=>{
@@ -57,6 +60,7 @@ function NewsContent(props:InputValue) {
                 })
                 .then(()=>{
                     setIsLoading(false)
+                    setMore(false)
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -79,13 +83,28 @@ function NewsContent(props:InputValue) {
         }
     }
 
+        // Inifinite Scroll 시 Fetch 함수 호출
+        useEffect(() => {
+            setMore(true)
+            if(props.inputValue){
+            if(isLoading === false){
+                setIsLoading(true)
+                FetchFunc();
+            }
+            }
+            window.addEventListener('scroll',scrollHandle)
+            return ()=>{window.removeEventListener('scroll',scrollHandle)}
+        }, [page])
+
     // Input Value Change 시 Fetch 함수 호출
     useEffect(()=>{
         setMore(false)
         if(props.inputValue){
             if(isLoading === false){
                 setIsLoading(true)
-                setPage(0)
+                if(page !== 0){
+                    setPage(0)
+                }
                 FetchFunc();
             }
         }
@@ -93,18 +112,7 @@ function NewsContent(props:InputValue) {
         return ()=>{window.removeEventListener('scroll',scrollHandle)}
     },[props.inputValue])
     
-    // Inifinite Scroll 시 Fetch 함수 호출
-    useEffect(() => {
-        setMore(true)
-        if(props.inputValue){
-        if(isLoading === false){
-            setIsLoading(true)
-            FetchFunc();
-        }
-        }
-        window.addEventListener('scroll',scrollHandle)
-        return ()=>{window.removeEventListener('scroll',scrollHandle)}
-    }, [page])
+
 
     // Store 전역 상태 관리에서 Clip한 List 호출
     const clipCheck = useSelector((state:RootState) => state)
@@ -126,7 +134,7 @@ function NewsContent(props:InputValue) {
                     storeClipCheck = true;
                 }
                 return(
-                    <NewsList newscontent={nl} clip={storeClipCheck} key={nl._id}/>
+                    <NewsList newscontent={nl} clip={storeClipCheck} key={index}/>
                 )
             })}
         </>
